@@ -1,0 +1,97 @@
+# SkillSwap — System & Dependency Requirements
+# Install these before running the project locally.
+
+# =============================================================================
+# SYSTEM REQUIREMENTS
+# =============================================================================
+
+# Node.js       >= 18.0.0   (required for frontend)
+# npm           >= 9.0.0    (comes with Node.js)
+# PHP           >= 8.3.0    (required for backend API)
+# Composer      >= 2.6.0    (PHP dependency manager)
+# MySQL         >= 8.0.0    (database)
+
+# =============================================================================
+# RECOMMENDED LOCAL STACK (Windows)
+# =============================================================================
+# Option 1: XAMPP (easiest) — includes PHP + MySQL + phpMyAdmin
+#   Download: https://www.apachefriends.org/
+#   Use PHP 8.3+ from XAMPP or install PHP separately
+
+# Option 2: Laragon — includes PHP, MySQL, Composer
+#   Download: https://laragon.org/
+
+# Option 3: Install individually via winget:
+#   winget install PHP.PHP.8.3
+#   winget install Composer.Composer
+#   winget install Oracle.MySQL
+
+# =============================================================================
+# FRONTEND NPM PACKAGES (auto-installed via npm install)
+# =============================================================================
+# react>=19.2.0
+# react-dom>=19.2.0
+# react-router-dom>=7.18.0
+# @reduxjs/toolkit>=2.12.0
+# react-redux>=9.3.0
+# axios>=1.18.0
+# react-hook-form>=7.79.0
+# framer-motion>=12.40.0
+# tailwindcss>=4.3.0
+# lucide-react>=1.21.0
+# react-hot-toast>=2.6.0
+# chart.js>=4.5.0
+# react-chartjs-2>=5.3.0
+# qrcode.react>=4.2.0
+# jspdf>=4.2.0
+# html2canvas>=1.4.0
+# class-variance-authority>=0.7.0
+# clsx>=2.1.0
+# tailwind-merge>=3.6.0
+# @radix-ui/react-* (dialog, dropdown, avatar, tabs, select, switch, label, etc.)
+
+# =============================================================================
+# BACKEND PHP PACKAGES (auto-installed via composer install)
+# =============================================================================
+# firebase/php-jwt ^6.10
+# vlucas/phpdotenv ^5.6
+
+# =============================================================================
+# PORTS USED LOCALLY
+# =============================================================================
+# Frontend (Vite):  5173
+# Backend (PHP):    8000
+# MySQL:            3306
+
+# =============================================================================
+# ENVIRONMENT FILES REQUIRED
+# =============================================================================
+# backend/.env      — copy from backend/.env.example
+# frontend/.env     — copy from frontend/.env.example
+
+# =============================================================================
+# DATABASE SETUP
+# =============================================================================
+# 1. Start MySQL
+# 2. Run: database/schema.sql
+# 3. Run: database/seed.sql
+# Default admin: admin@skillswap.ai / password
+
+# =============================================================================
+# INSTALLED ON THIS MACHINE (via winget + scripts)
+# =============================================================================
+# [x] Node.js v24.13.0
+# [x] PHP 8.3.31          (winget install PHP.PHP.8.3)
+# [x] MySQL 8.0 + 8.4     (winget install Oracle.MySQL, service MySQL80 running)
+# [x] Composer 2.10.1     (backend/composer.phar)
+# [x] Frontend npm deps   (292 packages)
+# [x] Backend PHP deps    (vendor/ folder)
+# [x] PHP extensions      (openssl, curl, mbstring, pdo_mysql, zip, fileinfo)
+
+# =============================================================================
+# QUICK START SCRIPTS
+# =============================================================================
+# scripts\setup-database.ps1   — import DB (requires MySQL root password)
+# scripts\start-backend.ps1    — API at http://localhost:8000
+# scripts\start-frontend.ps1   — UI at http://localhost:5173
+# scripts\install-local.bat    — full automated setup
