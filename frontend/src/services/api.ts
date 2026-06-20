@@ -1,6 +1,10 @@
 import axios from 'axios'
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
+// Production (Vercel): use /api proxy — same domain, no CORS issues
+// Development: use local PHP backend
+const API_URL = import.meta.env.PROD
+  ? '/api'
+  : (import.meta.env.VITE_API_URL || 'http://localhost:8000/api')
 
 const api = axios.create({
   baseURL: API_URL,
