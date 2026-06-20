@@ -1,7 +1,5 @@
 RewriteEngine On
-RewriteBase /
 
-# CORS for Vercel frontend (InfinityFree: preflight OPTIONS must get headers from Apache)
 <IfModule mod_headers.c>
     SetEnvIf Origin "^https://[\w.-]+\.vercel\.app$" CORS_ALLOW=$0
     SetEnvIf Origin "^http://localhost:5173$" CORS_ALLOW=$0
@@ -11,18 +9,6 @@ RewriteBase /
     Header always set Access-Control-Allow-Credentials "true" env=CORS_ALLOW
 </IfModule>
 
-# Route /api/* to api/index.php (InfinityFree compatible)
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^api/(.*)$ /api/index.php [QSA,L]
-
-# Deny access to sensitive files (Apache 2.2 + 2.4)
-<FilesMatch "\.(env|log|sql)$">
-    <IfModule mod_authz_core.c>
-        Require all denied
-    </IfModule>
-    <IfModule !mod_authz_core.c>
-        Order allow,deny
-        Deny from all
-    </IfModule>
-</FilesMatch>
+RewriteRule . index.php [L,QSA]
