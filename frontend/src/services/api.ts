@@ -1,13 +1,12 @@
 import axios from 'axios'
 
-// Production: call InfinityFree API directly (Vercel proxy is blocked by InfinityFree bot protection)
+// Production: same-origin /api → Vercel serverless proxy → InfinityFree (no CORS)
 const API_URL = import.meta.env.PROD
-  ? 'https://skillswapp.infinityfreeapp.com/api'
+  ? '/api'
   : (import.meta.env.VITE_API_URL || 'http://localhost:8000/api')
 
 const api = axios.create({
   baseURL: API_URL,
-  headers: { 'Content-Type': 'application/json' },
 })
 
 api.interceptors.request.use((config) => {
@@ -15,6 +14,12 @@ api.interceptors.request.use((config) => {
   const csrf = localStorage.getItem('csrf_token')
   if (token) config.headers.Authorization = `Bearer ${token}`
   if (csrf) config.headers['X-CSRF-Token'] = csrf
+
+  // Only set Content-Type when sending a body (avoids CORS preflight on GET)
+  if (config.data !== undefined && config.data !== null) {
+    config.headers['Content-Type'] = config.headers['Content-Type'] || 'application/json'
+  }
+
   return config
 })
 
