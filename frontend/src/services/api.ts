@@ -1,9 +1,8 @@
 import axios from 'axios'
 
-// Production (Vercel): use /api proxy — same domain, no CORS issues
-// Development: use local PHP backend
+// Production: call InfinityFree API directly (Vercel proxy is blocked by InfinityFree bot protection)
 const API_URL = import.meta.env.PROD
-  ? '/api'
+  ? 'https://skillswapp.infinityfreeapp.com/api'
   : (import.meta.env.VITE_API_URL || 'http://localhost:8000/api')
 
 const api = axios.create({

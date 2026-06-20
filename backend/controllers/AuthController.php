@@ -18,9 +18,27 @@ use App\Models\User;
 
 class AuthController
 {
+    /** @return array<string, mixed> */
+    private function parseInput(): array
+    {
+        if (!empty($_POST)) {
+            return $_POST;
+        }
+
+        $raw = file_get_contents('php://input') ?: '';
+        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+
+        if (str_contains($contentType, 'application/json')) {
+            return json_decode($raw, true) ?? [];
+        }
+
+        parse_str($raw, $parsed);
+        return $parsed;
+    }
+
     public function register(): void
     {
-        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+        $input = $this->parseInput();
 
         $validator = new Validator();
         if (!$validator->validate($input, [
@@ -60,7 +78,7 @@ class AuthController
 
     public function login(): void
     {
-        $input = json_decode(file_get_contents('php://input'), true) ?? [];
+        $input = $this->parseInput();
 
         $validator = new Validator();
         if (!$validator->validate($input, [

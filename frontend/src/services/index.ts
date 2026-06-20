@@ -155,10 +155,19 @@ export interface Certificate {
 }
 
 export const authService = {
-  register: (data: { name: string; email: string; password: string }) =>
-    api.post<ApiResponse<{ user: User; token: string; csrf_token: string }>>('/auth/register', data),
-  login: (data: { email: string; password: string; remember?: boolean }) =>
-    api.post<ApiResponse<{ user: User; token: string; csrf_token: string }>>('/auth/login', data),
+  register: (data: { name: string; email: string; password: string }) => {
+    const body = new URLSearchParams({ name: data.name, email: data.email, password: data.password })
+    return api.post<ApiResponse<{ user: User; token: string; csrf_token: string }>>('/auth/register', body, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    })
+  },
+  login: (data: { email: string; password: string; remember?: boolean }) => {
+    const body = new URLSearchParams({ email: data.email, password: data.password })
+    if (data.remember) body.append('remember', '1')
+    return api.post<ApiResponse<{ user: User; token: string; csrf_token: string }>>('/auth/login', body, {
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    })
+  },
   logout: () => api.post('/auth/logout'),
   me: () => api.get<ApiResponse<User>>('/auth/me'),
   forgotPassword: (email: string) => api.post('/auth/forgot-password', { email }),
