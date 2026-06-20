@@ -1,5 +1,11 @@
 const BACKEND = 'https://skillswapp.infinityfreeapp.com/api';
 
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
+
 function buildBody(req) {
   if (!req.method || ['GET', 'HEAD'].includes(req.method)) return undefined;
 
@@ -15,6 +21,11 @@ function buildBody(req) {
 }
 
 export default async function handler(req, res) {
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return;
+  }
+
   const segments = req.query.path;
   const path = Array.isArray(segments) ? segments.join('/') : (segments ?? '');
 
